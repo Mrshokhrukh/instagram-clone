@@ -5,7 +5,7 @@ type NavlinksProps = {};
 const Navlinks: React.FC<NavlinksProps> = () => {
   return (
     <div>
-      <ul></ul>
+      adsasd
     </div>
   );
 };

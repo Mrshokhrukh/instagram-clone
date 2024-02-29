@@ -5,8 +5,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -20,8 +18,9 @@ import {
   Sun,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Switch } from "@radix-ui/react-switch";
 import { useTheme } from "next-themes";
+import { Label } from "../ui/label";
+import { Switch } from "../ui/switch";
 
 const MoreDropDown: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -29,7 +28,6 @@ const MoreDropDown: React.FC = () => {
   let ref = useRef<HTMLDivElement>(null);
 
   const { theme, setTheme } = useTheme();
-
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -118,7 +116,14 @@ const MoreDropDown: React.FC = () => {
             <Label htmlFor="dark-mode" className="menuItem">
               Dark Mode
               <DropdownMenuItem className="ml-auto !p-0">
-                <Switch id="dark-mode" className="ml-auto" />
+                <Switch
+                  id="dark-mode"
+                  className="ml-auto"
+                  checked={theme === "dark"}
+                  onCheckedChange={(checked) => {
+                    setTheme(checked ? "dark" : "light");
+                  }}
+                />
               </DropdownMenuItem>
             </Label>
           </>

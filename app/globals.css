@@ -72,7 +72,6 @@
   }
   body {
     @apply bg-background text-foreground;
-    
   }
 }
 
@@ -82,5 +81,9 @@
   }
   .menuItem {
     @apply dark:hover:bg-[#3C3C3C] !cursor-pointer flex items-center gap-x-2 !px-4 !py-3.5 !m-1.5 !rounded-lg font-medium;
+  }
+  .authInput {
+    @apply bg-gray-100 border-gray-300 focus:border-gray-400 border-[1px] p-2 w-full font-normal outline-none text-[13px] 
+    placeholder:text-gray-500 placeholder:text-[12px];
   }
 }

@@ -20,6 +20,7 @@ const config = {
     extend: {
       colors: {
         lightblue: "rgb(91, 206, 252)",
+        dodgerblue: "#1e90ff",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

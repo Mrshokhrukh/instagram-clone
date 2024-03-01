@@ -9,5 +9,9 @@ export default function AuthLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className="grid place-content-center h-screen">{children}</div>;
+  return (
+    <div className="grid place-content-center h-screen bg-white">
+      {children}
+    </div>
+  );
 }

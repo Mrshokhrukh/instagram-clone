@@ -1,35 +1,71 @@
 "use client";
-import React from "react";
-import { useFormStatus } from "react-dom";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import qora from "../../assets/qoraLogo.png";
 import { AiFillFacebook } from "react-icons/ai";
+import {
+  useSignInWithEmailAndPassword,
+  useSignInWithFacebook,
+} from "react-firebase-hooks/auth";
+import { auth } from "@/app/fireabase/firebase";
+import { redirect } from "next/navigation";
 
 type LoginFormProps = {};
 
 const LoginForm: React.FC<LoginFormProps> = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
+  const [signInWithFacebook] = useSignInWithFacebook(auth);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(email, password);
+  };
+
+  // const signInWithFacebookBtn = () => {
+  //  ;
+  // };
+
+  if (error) {
+    alert(error.message);
+  }
+  if (user) {
+    return redirect("/");
+  }
+
   return (
     <div className="flex flex-col gap-3 w-[340px] h-auto">
       <div className="text-center p-9 pb-5 border border-gray-300">
         <Image
           src={qora}
           width={200}
+          priority={true}
           alt=""
           className="px-3 pb-8 m-auto my-2 mt-3"
         />
 
-        <form className="flex flex-col space-y-4 mb-5">
+        <form className="flex flex-col space-y-4 mb-5" onSubmit={handleSubmit}>
           <div className="flex flex-col space-y-2">
-            <input type="text" className="authInput" placeholder="Email" />
+            <input
+              type="text"
+              className="authInput"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+            />
             <input
               type="password"
               className="authInput"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
             />
           </div>
           <button className="font-medium text-sm bg-lightblue text-white rounded p-1.5">
-            Log in
+            {loading ? "logging in..." : "Sign In"}
           </button>
         </form>
 
@@ -39,15 +75,15 @@ const LoginForm: React.FC<LoginFormProps> = () => {
           <div className="w-[40%] h-0 border-t-[1px] border-gray-200"></div>
         </div>
 
-        <a
-          href=""
+        <div
           className="flex items-center justify-center mt-5 mb-4 text-sm font-medium text-blue-800 cursor-pointer"
+          onClick={() => signInWithFacebook()}
         >
           <span className="mr-2 text-xl">
             <AiFillFacebook />
           </span>
           Log in with Facebook
-        </a>
+        </div>
 
         <a href="" className="hover:underline text-[12px] text-blue-700">
           Forgot password?
@@ -85,19 +121,5 @@ const LoginForm: React.FC<LoginFormProps> = () => {
     </div>
   );
 };
-
-function LoginButton() {
-  const { pending } = useFormStatus();
-  return (
-    <Button
-      className="mt-4 w-full"
-      variant={"secondary"}
-      aria-disabled={pending}
-      onClick={() => ""}
-    >
-      Login with google
-    </Button>
-  );
-}
 
 export default LoginForm;

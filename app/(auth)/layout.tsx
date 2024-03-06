@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Auth | Login",
+  title: "Instagram | Auth",
 };
 
 export default function AuthLayout({

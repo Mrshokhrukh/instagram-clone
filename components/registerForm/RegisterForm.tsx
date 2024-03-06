@@ -4,19 +4,37 @@ import Image from "next/image";
 import qora from "../../assets/qoraLogo.png";
 import { AiFillFacebook } from "react-icons/ai";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "@/app/fireabase/firebase";
+import { auth, db } from "@/app/fireabase/firebase";
 import { redirect } from "next/navigation";
+import { doc, setDoc } from "firebase/firestore";
 
 const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [fullName, setFullName] = useState("");
 
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await createUserWithEmailAndPassword(email, password);
+
+    const userData = {
+      username: username,
+      password: password,
+      email: email,
+      fullName: fullName,
+    };
+
+    try {
+      const cityRef = doc(db, "users", '');
+      await setDoc(cityRef, userData);
+      await createUserWithEmailAndPassword(email, password);
+    } catch (err) {
+      console.log(err);
+    }
+
     setEmail("");
     setPassword("");
   };
@@ -53,7 +71,7 @@ const RegisterForm = () => {
       <form className="flex flex-col space-y-4 mb-5" onSubmit={handleSubmit}>
         <div className="flex flex-col space-y-2">
           <input
-            type="text"
+            type="email"
             className="authInput"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -63,12 +81,16 @@ const RegisterForm = () => {
           <input
             type="text"
             className="authInput"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
             placeholder="Full Name"
             required
           />
           <input
             type="text"
             className="authInput"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
             required
           />

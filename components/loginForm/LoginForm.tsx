@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import qora from "../../assets/qoraLogo.png";
-import { AiFillFacebook } from "react-icons/ai";
+import { AiFillGoogleCircle } from "react-icons/ai";
 import {
   useSignInWithEmailAndPassword,
-  useSignInWithFacebook,
+  useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import { auth } from "@/app/fireabase/firebase";
 import { redirect } from "next/navigation";
@@ -18,7 +18,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
   const [password, setPassword] = useState("");
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
-  const [signInWithFacebook] = useSignInWithFacebook(auth);
+  const [signInWithGoogle] = useSignInWithGoogle(auth);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -77,12 +77,12 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 
         <div
           className="flex items-center justify-center mt-5 mb-4 text-sm font-medium text-blue-800 cursor-pointer"
-          onClick={() => signInWithFacebook()}
+          onClick={() => signInWithGoogle()}
         >
           <span className="mr-2 text-xl">
-            <AiFillFacebook />
+            <AiFillGoogleCircle />
           </span>
-          Log in with Facebook
+          Log in with Google
         </div>
 
         <a href="" className="hover:underline text-[12px] text-blue-700">

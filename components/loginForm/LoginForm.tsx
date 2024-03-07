@@ -12,6 +12,7 @@ import { redirect, useRouter } from "next/navigation";
 
 const LoginForm = () => {
   let router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signInWithEmailAndPassword, user, loading, error] =
@@ -30,11 +31,15 @@ const LoginForm = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     signInWithEmailAndPassword(email, password);
+
+    setEmail("");
+    setPassword("");
   };
 
-  if (error) {
-    alert(error.message);
-  }
+  // if (error) {
+  //   alert(error.message);
+  // }
+
   if (user) {
     return redirect("/");
   }

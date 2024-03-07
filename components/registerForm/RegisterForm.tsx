@@ -43,6 +43,8 @@ const RegisterForm = () => {
 
     setEmail("");
     setPassword("");
+    setFullName("");
+    setUsername("");
   };
 
   if (error) {

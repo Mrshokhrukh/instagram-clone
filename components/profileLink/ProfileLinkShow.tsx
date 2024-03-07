@@ -44,7 +44,14 @@ const ProfileLinkShow = () => {
       <Avatar
         sx={{ width: 33, height: 33 }}
         // className="h-8 w-8"
-        src={userData?.profileImg ? userData?.profileImg : user?.photoURL}
+        // src={userData?.profileImg}
+        src={
+          userData?.profileImg
+            ? userData?.profileImg
+            : user?.photoURL
+            ? user?.photoURL
+            : ""
+        }
       />
 
       <p

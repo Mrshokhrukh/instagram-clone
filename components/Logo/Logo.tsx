@@ -19,6 +19,7 @@ const Logo: React.FC = () => {
     >
       <FaInstagram className="h-6 w-6 shrink-0 lg:hidden" />
       <Image
+        priority={true}
         src={logo}
         alt="logo"
         className="w-[110px] font-semibold text-xl hidden lg:block mt-6"

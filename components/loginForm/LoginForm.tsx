@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { Button } from "../ui/button";
 import Image from "next/image";
 import qora from "../../assets/qoraLogo.png";
 import { AiFillGoogleCircle } from "react-icons/ai";
@@ -9,25 +8,29 @@ import {
   useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import { auth } from "@/app/fireabase/firebase";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
-type LoginFormProps = {};
-
-const LoginForm: React.FC<LoginFormProps> = () => {
+const LoginForm = () => {
+  let router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
   const [signInWithGoogle] = useSignInWithGoogle(auth);
 
+  const loginWithGoogle = async () => {
+    try {
+      await signInWithGoogle();
+      router.push("/");
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     signInWithEmailAndPassword(email, password);
   };
-
-  // const signInWithFacebookBtn = () => {
-  //  ;
-  // };
 
   if (error) {
     alert(error.message);
@@ -40,9 +43,9 @@ const LoginForm: React.FC<LoginFormProps> = () => {
     <div className="flex flex-col gap-3 w-[340px] h-auto">
       <div className="text-center p-9 pb-5 border border-gray-300">
         <Image
+          priority={true}
           src={qora}
           width={200}
-          priority={true}
           alt=""
           className="px-3 pb-8 m-auto my-2 mt-3"
         />
@@ -77,7 +80,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 
         <div
           className="flex items-center justify-center mt-5 mb-4 text-sm font-medium text-blue-800 cursor-pointer"
-          onClick={() => signInWithGoogle()}
+          onClick={loginWithGoogle}
         >
           <span className="mr-2 text-xl">
             <AiFillGoogleCircle />

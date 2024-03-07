@@ -1,7 +1,7 @@
 "use client";
 import { links } from "@/assets/data";
 
-import React, { useState } from "react";
+import React from "react";
 import { buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";

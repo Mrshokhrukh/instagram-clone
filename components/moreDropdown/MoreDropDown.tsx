@@ -21,12 +21,29 @@ import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
+import { getAuth, signOut } from "firebase/auth";
+
+import { useRouter } from "next/navigation";
+import { app } from "@/app/fireabase/firebase";
+
+const auth = getAuth(app);
 
 const MoreDropDown: React.FC = () => {
+  let router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const [showModeToggle, setShowModeToggle] = useState<boolean>(false);
   let ref = useRef<HTMLDivElement>(null);
 
+  const logout = () => {
+    signOut(auth)
+      .then(() => {
+        alert("logout success");
+        router.push("/signup");
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
@@ -44,8 +61,6 @@ const MoreDropDown: React.FC = () => {
       document.removeEventListener("mousedown", handleClick);
     };
   }, [ref]);
-
-  const singOut = () => {};
 
   return (
     <DropdownMenu open={open}>
@@ -95,7 +110,7 @@ const MoreDropDown: React.FC = () => {
             </DropdownMenuItem>
 
             {/* <DropdownMenuSeparator /> */}
-            <DropdownMenuItem className="menuItem" onClick={() => singOut()}>
+            <DropdownMenuItem className="menuItem" onClick={logout}>
               <LogOut size={20} />
               <p>Logout</p>
             </DropdownMenuItem>

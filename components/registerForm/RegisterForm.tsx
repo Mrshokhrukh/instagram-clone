@@ -2,8 +2,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import qora from "../../assets/qoraLogo.png";
-import { AiFillFacebook } from "react-icons/ai";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { AiFillGoogleCircle } from "react-icons/ai";
+import {
+  useCreateUserWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 import { auth, db } from "@/app/fireabase/firebase";
 import { redirect } from "next/navigation";
 import { doc, setDoc } from "firebase/firestore";
@@ -14,13 +17,17 @@ const RegisterForm = () => {
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
 
+  const [signInWithGoogle] = useSignInWithGoogle(auth);
+
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const newUser = await createUserWithEmailAndPassword(email, password);
 
     const userData = {
+      uid: newUser?.user.uid,
       username: username,
       password: password,
       email: email,
@@ -28,9 +35,8 @@ const RegisterForm = () => {
     };
 
     try {
-      const cityRef = doc(db, "users", '');
+      const cityRef = doc(db, "users", `${newUser?.user.uid}`);
       await setDoc(cityRef, userData);
-      await createUserWithEmailAndPassword(email, password);
     } catch (err) {
       console.log(err);
     }
@@ -50,16 +56,19 @@ const RegisterForm = () => {
     <div className="text-center p-9 pb-5 border border-gray-300">
       <Image
         src={qora}
-        width={200}
         priority={true}
+        width={200}
         alt="404"
         className="px-3 m-auto my-2 mt-3"
       />
       <p className="text-gray-500 font-medium text-sm pb-3.5">
         Sign up to see photos and videos from your friends.
       </p>
-      <button className="flex items-center justify-center gap-2 w-full font-medium text-sm bg-dodgerblue text-white rounded p-2">
-        <AiFillFacebook className="text-xl" /> Log in with Facebook
+      <button
+        className="flex items-center justify-center gap-2 w-full font-medium text-sm bg-dodgerblue text-white rounded p-2"
+        onClick={() => signInWithGoogle()}
+      >
+        <AiFillGoogleCircle className="text-xl" /> Log in with Google
       </button>
 
       <div className="flex justify-between items-center m-y-2 p-4">

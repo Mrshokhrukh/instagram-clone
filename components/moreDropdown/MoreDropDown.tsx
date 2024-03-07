@@ -21,12 +21,10 @@ import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
-import { getAuth, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 
 import { useRouter } from "next/navigation";
-import { app } from "@/app/fireabase/firebase";
-
-const auth = getAuth(app);
+import { auth } from "@/app/fireabase/firebase";
 
 const MoreDropDown: React.FC = () => {
   let router = useRouter();

@@ -8,13 +8,12 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { buttonVariants } from "../ui/button";
 import Avatar from "@mui/material/Avatar";
-type ProfileLinkShowProps = {};
 
-const ProfileLinkShow: React.FC<ProfileLinkShowProps> = () => {
+const ProfileLinkShow = () => {
   const [userData, setUserData] = useState<any>();
   const [user] = useAuthState(auth);
+
   const pathName = usePathname();
-  console.log(user);
 
   useEffect(() => {
     const getData = async () => {
@@ -43,7 +42,8 @@ const ProfileLinkShow: React.FC<ProfileLinkShowProps> = () => {
       })}
     >
       <Avatar
-        className="h-8 w-8"
+        sx={{ width: 33, height: 33 }}
+        // className="h-8 w-8"
         src={userData?.profileImg ? userData?.profileImg : user?.photoURL}
       />
 

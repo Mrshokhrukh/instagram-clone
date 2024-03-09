@@ -32,6 +32,15 @@ const RegisterForm = () => {
       password: password,
       email: email,
       fullName: fullName,
+      bio: "",
+      profileImg: "",
+      posts: [],
+      likes: [],
+      dislikes: [],
+      savedPosts: [],
+      followersCount: [],
+      followingCount: [],
+      
     };
 
     try {

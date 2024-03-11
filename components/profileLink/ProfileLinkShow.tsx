@@ -37,7 +37,7 @@ const ProfileLinkShow = () => {
       href={href}
       className={buttonVariants({
         variant: isActive ? "secondary" : "ghost",
-        className: "navlink flex !justify-center",
+        className: "navlink flex !justify-center lg:!justify-start",
         size: "lg",
       })}
     >

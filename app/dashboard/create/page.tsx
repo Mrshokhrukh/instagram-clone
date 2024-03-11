@@ -6,7 +6,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import useMount from "@/hooks/useMount";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
@@ -38,9 +37,9 @@ function CreatePage({}: Props) {
             <DialogTitle>Create new post</DialogTitle>
           </DialogHeader>
 
-          <form className="space-y-4">
-            <Input type="text" placeholder="username" />
+          <form className="space-y-4 mx-auto">
            
+           <button className="bg-gray-900">create a post</button>
           </form>
         </DialogContent>
       </Dialog>

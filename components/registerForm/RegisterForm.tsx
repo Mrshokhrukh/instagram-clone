@@ -42,6 +42,7 @@ const RegisterForm = () => {
       savedPosts: [],
       followersCount: [],
       followingCount: [],
+      createdAt: Date.now(),
     };
 
     try {

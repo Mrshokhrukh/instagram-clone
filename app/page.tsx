@@ -7,6 +7,8 @@ export default async function Page() {
   const [user] = useAuthState(auth);
   if (user) {
     localStorage.setItem("userId", JSON.stringify(user?.uid));
+    redirect("/dashboard");
+  } else {
+    redirect("/login");
   }
-  redirect("/dashboard");
 }

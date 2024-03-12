@@ -16,6 +16,7 @@ const RegisterForm = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
+  const [showPass, setShowPass] = useState(false);
 
   const [signInWithGoogle] = useSignInWithGoogle(auth);
 
@@ -40,7 +41,6 @@ const RegisterForm = () => {
       savedPosts: [],
       followersCount: [],
       followingCount: [],
-      
     };
 
     try {
@@ -114,14 +114,23 @@ const RegisterForm = () => {
             placeholder="Username"
             required
           />
-          <input
-            type="password"
-            className="authInput"
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            value={password}
-            required
-          />
+
+          <div className="flex">
+            <input
+              type={showPass ? "text" : "password"}
+              className="authInput"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+            />
+            <button
+              type="button"
+              className="text-[12px] w-[45px] bg-slate-100 border border-l-0 border-gray-300"
+              onClick={() => setShowPass(!showPass)}
+            >
+              {showPass ? "hide" : "show"}
+            </button>
+          </div>
         </div>
         <p className="text-[11px] text-gray-500">
           People who use our service may have uploaded your contact information

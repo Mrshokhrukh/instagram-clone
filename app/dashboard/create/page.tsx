@@ -20,8 +20,6 @@ function CreatePage({}: Props) {
   const mount = useMount();
   const [user] = useAuthState(auth);
 
-  
-
   if (!mount) {
     return null;
   }
@@ -37,9 +35,8 @@ function CreatePage({}: Props) {
             <DialogTitle>Create new post</DialogTitle>
           </DialogHeader>
 
-          <form className="space-y-4 mx-auto">
-           
-           <button className="bg-gray-900">create a post</button>
+          <form className="space-y-4">
+            <button className="bg-gray-900">create a post</button>
           </form>
         </DialogContent>
       </Dialog>

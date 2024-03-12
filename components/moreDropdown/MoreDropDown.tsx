@@ -25,6 +25,7 @@ import { signOut } from "firebase/auth";
 
 import { useRouter } from "next/navigation";
 import { auth } from "@/app/fireabase/firebase";
+import { toast } from "sonner";
 
 const MoreDropDown: React.FC = () => {
   let router = useRouter();
@@ -33,14 +34,9 @@ const MoreDropDown: React.FC = () => {
   let ref = useRef<HTMLDivElement>(null);
 
   const logout = () => {
-    signOut(auth)
-      .then(() => {
-        alert("logout success");
-        router.push("/signup");
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    signOut(auth);
+    toast.success("logout success", { position: "top-right" });
+    router.push("/login");
   };
   const { theme, setTheme } = useTheme();
 

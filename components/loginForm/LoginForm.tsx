@@ -12,7 +12,7 @@ import { redirect, useRouter } from "next/navigation";
 
 const LoginForm = () => {
   let router = useRouter();
-
+  const [showPass, setShowPass] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signInWithEmailAndPassword, user, loading, error] =
@@ -64,13 +64,22 @@ const LoginForm = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
             />
-            <input
-              type="password"
-              className="authInput"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-            />
+            <div className="flex">
+              <input
+                type={showPass ? "text" : "password"}
+                className="authInput"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+              />
+              <button
+                type="button"
+                className="text-[12px] w-[45px] bg-slate-100 border border-l-0 border-gray-300"
+                onClick={() => setShowPass(!showPass)}
+              >
+                {showPass ? "hide" : "show"}
+              </button>
+            </div>
           </div>
           <button className="font-medium text-sm bg-lightblue text-white rounded p-1.5">
             {loading ? "logging in..." : "Sign In"}

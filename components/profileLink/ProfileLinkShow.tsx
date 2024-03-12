@@ -3,7 +3,7 @@ import { auth, db } from "@/app/fireabase/firebase";
 import { cn } from "@/lib/utils";
 import { doc, getDoc } from "firebase/firestore";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { buttonVariants } from "../ui/button";
@@ -12,7 +12,6 @@ import Avatar from "@mui/material/Avatar";
 const ProfileLinkShow = () => {
   const [userData, setUserData] = useState<any>();
   const [user] = useAuthState(auth);
-
   const pathName = usePathname();
 
   useEffect(() => {
@@ -29,7 +28,7 @@ const ProfileLinkShow = () => {
   const isActive = pathName === href;
 
   if (!user) {
-    return;
+    return redirect("/login");
   }
 
   return (

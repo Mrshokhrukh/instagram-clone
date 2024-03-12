@@ -21,22 +21,24 @@ import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
-import { signOut } from "firebase/auth";
-
+import { useSignOut } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "@/app/fireabase/firebase";
 import { toast } from "sonner";
 
 const MoreDropDown: React.FC = () => {
   let router = useRouter();
+  const [signOut, loading, error] = useSignOut(auth);
   const [open, setOpen] = useState<boolean>(false);
   const [showModeToggle, setShowModeToggle] = useState<boolean>(false);
   let ref = useRef<HTMLDivElement>(null);
 
-  const logout = () => {
-    signOut(auth);
-    toast.success("logout success", { position: "top-right" });
-    router.push("/login");
+  const logout = async () => {
+    const isOut = await signOut();
+    if (isOut) {
+      toast.success("Log Out Successfully", { position: "top-right" });
+      router.push("/login");
+    }
   };
   const { theme, setTheme } = useTheme();
 

@@ -27,9 +27,9 @@ const ProfileLinkShow = () => {
 
   const isActive = pathName === href;
 
-  if (!user) {
-    return redirect("/login");
-  }
+  // if (!user) {
+  //   return redirect("/login");
+  // }
 
   return (
     <Link

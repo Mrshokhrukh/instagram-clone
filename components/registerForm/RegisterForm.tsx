@@ -10,6 +10,7 @@ import {
 import { auth, db } from "@/app/fireabase/firebase";
 import { redirect } from "next/navigation";
 import { doc, setDoc } from "firebase/firestore";
+import { toast } from "sonner";
 
 const RegisterForm = () => {
   const [email, setEmail] = useState("");
@@ -46,8 +47,10 @@ const RegisterForm = () => {
     try {
       const cityRef = doc(db, "users", `${newUser?.user.uid}`);
       await setDoc(cityRef, userData);
+      toast.success("Registered Successfully", { position: "top-right" });
     } catch (err) {
       console.log(err);
+      toast.error("Something went wrong !", { position: "top-right" });
     }
 
     setEmail("");

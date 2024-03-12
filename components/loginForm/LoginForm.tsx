@@ -4,18 +4,21 @@ import Image from "next/image";
 import qora from "../../assets/qoraLogo.png";
 import { AiFillGoogleCircle } from "react-icons/ai";
 import {
+  useAuthState,
   useSignInWithEmailAndPassword,
   useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import { auth } from "@/app/fireabase/firebase";
 import { redirect, useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const LoginForm = () => {
+  const [user] = useAuthState(auth);
   let router = useRouter();
   const [showPass, setShowPass] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [signInWithEmailAndPassword, user, loading, error] =
+  const [signInWithEmailAndPassword, _, loading, error] =
     useSignInWithEmailAndPassword(auth);
   const [signInWithGoogle] = useSignInWithGoogle(auth);
 
@@ -30,18 +33,18 @@ const LoginForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signInWithEmailAndPassword(email, password);
-
+    await signInWithEmailAndPassword(email, password);
+    toast.success("Log in Success", { position: "top-right" });
     setEmail("");
     setPassword("");
   };
 
-  // if (error) {
-  //   alert(error.message);
-  // }
+  if (error) {
+    toast.error(`${error.message}`, { position: "top-right" });
+  }
 
   if (user) {
-    return redirect("/");
+    return redirect("/dashboard");
   }
 
   return (

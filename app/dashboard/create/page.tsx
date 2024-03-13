@@ -24,13 +24,8 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import {
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  uploadString,
-} from "firebase/storage";
 
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 type Props = {};
 
 function CreatePage({}: Props) {
@@ -43,11 +38,23 @@ function CreatePage({}: Props) {
   const mount = useMount();
   const [user] = useAuthState(auth);
   const [loading, setLoading] = useState(false);
-  // "https://t3.ftcdn.net/jpg/05/71/06/76/360_F_571067620_JS5T5TkDtu3gf8Wqm78KoJRF1vobPvo6.jpg"
-
   const imageRef = useRef(null);
 
-  useEffect(() => {}, []);
+  let toastId = useRef<any>();
+
+  useEffect(() => {
+    console.log(loading);
+
+    if (loading) {
+      toastId.current = toast.loading(
+        "Please wait... Post is being uploaded.",
+        {
+          position: "top-right",
+        }
+      );
+    }
+    toast.dismiss(toastId.current);
+  }, [loading]);
 
   const handleChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -77,28 +84,23 @@ function CreatePage({}: Props) {
         const postDocRef = await addDoc(collection(db, "posts"), newPost);
         const userDocRef = doc(db, "users", user.uid);
         const imageRef = ref(storage, `posts/${postDocRef.id}`);
-        console.log("1");
-
         await updateDoc(userDocRef, { posts: arrayUnion(postDocRef.id) });
-        console.log("2");
-        uploadBytes(imageRef, image);
-        console.log("3");
-
-        const downloadURL = await getDownloadURL(imageRef);
-        console.log("4");
-        await updateDoc(postDocRef, { imageURL: downloadURL });
-        console.log("5");
-        newPost.imgURL = downloadURL;
-        console.log("6");
-
-        toast.success("Posted", { position: "top-center" });
+        await uploadBytes(imageRef, image).then((snapshot) => {
+          getDownloadURL(snapshot.ref).then((url) => {
+            updateDoc(postDocRef, { imgURL: url });
+            newPost.imgURL = url;
+            toast.success("Posted", { position: "top-center" });
+          });
+        });
+        setLoading(false);
       } catch (error) {
         toast.error("Something went wrong !", { position: "top-center" });
-      } finally {
-        setLoading(false);
       }
     }
+    // setImageUrl("");
+    // setCaption("");
     setImage(null);
+    router.back();
   };
 
   // ,
@@ -155,8 +157,14 @@ function CreatePage({}: Props) {
                   onChange={handleChangeImg}
                 />
               </div>
-              <Button type="submit" className="mt-10">
-                {loading ? "Posting..." : "Post"}
+              <Button
+                type="submit"
+                className={`mt-10 ${
+                  loading ? "cursor-no-drop" : "cursor-pointer"
+                }`}
+                disabled={loading}
+              >
+                Post
               </Button>
             </div>
           </form>

@@ -1,27 +1,19 @@
 "use client";
-import { auth, db } from "@/app/fireabase/firebase";
+import { auth } from "@/app/fireabase/firebase";
 import { cn } from "@/lib/utils";
-import { doc, getDoc } from "firebase/firestore";
 import Link from "next/link";
-import { redirect, usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { buttonVariants } from "../ui/button";
 import Avatar from "@mui/material/Avatar";
+import useGetCurrentUser from "@/hooks/useGetCurrentUser";
 
 const ProfileLinkShow = () => {
-  const [userData, setUserData] = useState<any>();
+  // const [userData, setUserData] = useState<any>();
   const [user] = useAuthState(auth);
   const pathName = usePathname();
 
-  useEffect(() => {
-    const getData = async () => {
-      const docRef = doc(db, "users", `${user?.uid}`);
-      const docSnap = await getDoc(docRef);
-      setUserData(docSnap.data());
-    };
-    getData();
-  }, [user]);
+  const { userData, isLoading } = useGetCurrentUser();
 
   const href = `/dashboard/${userData?.username}`;
 

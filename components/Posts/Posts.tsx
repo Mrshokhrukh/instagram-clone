@@ -1,10 +1,17 @@
 import React from "react";
+import Post from "./Post";
 
 type PostsProps = {};
 
 const Posts: React.FC<PostsProps> = () => {
   // data fetching logic
-
-  return <div>Have a good coding posts</div>;
+  
+  return (
+    <div>
+      <Post />
+      <Post />
+      <Post />
+    </div>
+  );
 };
 export default Posts;

@@ -43,7 +43,6 @@ function CreatePage({}: Props) {
   let toastId = useRef<any>();
 
   useEffect(() => {
-
     if (loading) {
       toastId.current = toast.loading(
         "Please wait... Post is being uploaded.",
@@ -74,7 +73,7 @@ function CreatePage({}: Props) {
         caption: caption,
         likes: [],
         comments: [],
-        timestamp: Date.now(),
+        createdAt: Date.now(),
         createdBy: user.uid,
         imgURL: "",
       };

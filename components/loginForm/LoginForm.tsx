@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import qora from "../../assets/qoraLogo.png";
 import { AiFillGoogleCircle } from "react-icons/ai";
@@ -11,10 +11,11 @@ import {
 import { auth } from "@/app/fireabase/firebase";
 import { redirect, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import useMount from "@/hooks/useMount";
 
 const LoginForm = () => {
-  
   const [user] = useAuthState(auth);
+
   let router = useRouter();
   const [showPass, setShowPass] = useState(false);
   const [email, setEmail] = useState("");
@@ -34,8 +35,10 @@ const LoginForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await signInWithEmailAndPassword(email, password);
-    toast.success("Log in Success", { position: "top-right" });
+    const newUser = await signInWithEmailAndPassword(email, password);
+    if (newUser) {
+      toast.success("Log in Success", { position: "top-right" });
+    }
     setEmail("");
     setPassword("");
   };

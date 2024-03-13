@@ -43,7 +43,6 @@ function CreatePage({}: Props) {
   let toastId = useRef<any>();
 
   useEffect(() => {
-    console.log(loading);
 
     if (loading) {
       toastId.current = toast.loading(

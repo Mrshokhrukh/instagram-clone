@@ -25,14 +25,15 @@ import { useSignOut } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "@/app/fireabase/firebase";
 import { toast } from "sonner";
+import useMount from "@/hooks/useMount";
 
 const MoreDropDown: React.FC = () => {
   let router = useRouter();
+  const mount = useMount();
   const [signOut, loading, error] = useSignOut(auth);
   const [open, setOpen] = useState<boolean>(false);
   const [showModeToggle, setShowModeToggle] = useState<boolean>(false);
   let ref = useRef<HTMLDivElement>(null);
-
   const logout = async () => {
     const isOut = await signOut();
     if (isOut) {
@@ -57,6 +58,10 @@ const MoreDropDown: React.FC = () => {
       document.removeEventListener("mousedown", handleClick);
     };
   }, [ref]);
+
+  if (!mount) {
+    return null;
+  }
 
   return (
     <DropdownMenu open={open}>

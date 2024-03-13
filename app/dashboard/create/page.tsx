@@ -1,5 +1,5 @@
 "use client";
-import { auth, db } from "@/app/fireabase/firebase";
+import { auth, db, storage } from "@/app/fireabase/firebase";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -14,9 +14,22 @@ import { Textarea } from "@/components/ui/textarea";
 import useMount from "@/hooks/useMount";
 import { BsImages } from "react-icons/bs";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "sonner";
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadString,
+} from "firebase/storage";
 
 type Props = {};
 
@@ -34,33 +47,58 @@ function CreatePage({}: Props) {
 
   const imageRef = useRef(null);
 
+  useEffect(() => {}, []);
+
   const handleChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
       const file = files[0];
-      console.log(file);
       setImage(file);
       setImageUrl(URL.createObjectURL(file));
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!image) toast.error("Please upload an image");
-    setLoading(true);
-    const newPost = {
-      caption: caption,
-      likes: [],
-      comments: [],
-      timestamp: Date.now(),
-      createdBy: user?.uid,
-    };
+    if (user && image) {
+      setLoading(true);
 
-    try {
-    } catch (err) {
-      toast.error(`${err.message}`, { position: "top-center" });
-    } finally {
-      setLoading(false);
+      const newPost = {
+        caption: caption,
+        likes: [],
+        comments: [],
+        timestamp: Date.now(),
+        createdBy: user.uid,
+        imgURL: "",
+      };
+
+      try {
+        const postDocRef = await addDoc(collection(db, "posts"), newPost);
+        const userDocRef = doc(db, "users", user.uid);
+        const imageRef = ref(storage, `posts/${postDocRef.id}`);
+        console.log("1");
+
+        await updateDoc(userDocRef, { posts: arrayUnion(postDocRef.id) });
+        console.log("2");
+        uploadBytes(imageRef, image);
+        console.log("3");
+
+        const downloadURL = await getDownloadURL(imageRef);
+        console.log("4");
+        await updateDoc(postDocRef, { imageURL: downloadURL });
+        console.log("5");
+        newPost.imgURL = downloadURL;
+        console.log("6");
+
+        toast.success("Posted", { position: "top-center" });
+      } catch (error) {
+        toast.error("Something went wrong !", { position: "top-center" });
+      } finally {
+        setLoading(false);
+      }
     }
+    setImage(null);
   };
 
   // ,
@@ -87,7 +125,7 @@ function CreatePage({}: Props) {
             <DialogTitle>Create new post</DialogTitle>
           </DialogHeader>
 
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             {imageUrl && (
               <img
                 src={imageUrl}
@@ -118,7 +156,7 @@ function CreatePage({}: Props) {
                 />
               </div>
               <Button type="submit" className="mt-10">
-                Post
+                {loading ? "Posting..." : "Post"}
               </Button>
             </div>
           </form>

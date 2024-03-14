@@ -1,7 +1,11 @@
 import { cn } from "@/lib/utils";
-import { MessageCircle } from "lucide-react";
+
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import LikeButton from "./LikeButton";
+import ActionIconComment from "./ActionIconComment";
+import ShareButton from "./ShareButton";
+import BookmarkButton from "./BookmarkButton";
 
 type PostActionsProps = {
   userId?: string;
@@ -15,15 +19,13 @@ const PostActions: React.FC<PostActionsProps> = ({
   className,
 }) => {
   return (
-    <div className={cn("relative flex items-center w-full gap-x-2", className)}>
-      {/* <LikeButton />
+    <div className={cn("relative flex items-start w-full gap-x-2 ", className)}>
+      <LikeButton />
       <Link href={`/dashboard/p/${post.id}`}>
-        <ActionIcon>
-            <MessageCircle className="h-6 w-6"/>
-        </ActionIcon>
+        <ActionIconComment />
       </Link>
-      <ShareButton />
-      <BookmarkButton /> */}
+      <ShareButton postId={post.id} />
+      <BookmarkButton />
     </div>
   );
 };

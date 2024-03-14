@@ -8,7 +8,7 @@ const Posts: React.FC<PostsProps> = () => {
   // ;
 
   return (
-    <div>
+    <div className="">
       {postData.map((post: any, i: any) => {
         return <Post key={i} post={post}/>;
       })}

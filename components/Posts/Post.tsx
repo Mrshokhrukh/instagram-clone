@@ -48,11 +48,11 @@ const Post: React.FC<PostProps> = ({ post }) => {
         </div>
         <PostsOptions userId={user?.uid} post={post} />
       </div>
-      <Card className="relative h-[450px] w-full overflow-hidden rounded-none">
+      <Card className="relative h-[460px] w-full overflow-hidden rounded-none">
         <img
           src="https://marketplace.canva.com/EAFNVAn583I/1/0/1600w/canva-minimal-paper-coming-soon-instagram-post-Epfk6z-VnXM.jpg"
           alt="post image"
-          className="sm:rounded-md object-cover"
+          className="w-full h-full sm:rounded-md !object-cover"
         />
       </Card>
 

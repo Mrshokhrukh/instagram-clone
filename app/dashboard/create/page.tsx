@@ -85,7 +85,7 @@ function CreatePage({}: Props) {
         await updateDoc(userDocRef, { posts: arrayUnion(postDocRef.id) });
         await uploadBytes(imageRef, image).then((snapshot) => {
           getDownloadURL(snapshot.ref).then((url) => {
-            updateDoc(postDocRef, { imgURL: url });
+            updateDoc(postDocRef, { imgURL: url, id: postDocRef.id });
             newPost.imgURL = url;
             toast.success("Posted", { position: "top-center" });
           });
@@ -100,15 +100,6 @@ function CreatePage({}: Props) {
     setImage(null);
     router.back();
   };
-
-  // ,
-
-  //   <label className="msg_share_option img_upload">
-  //   <input type="file" accept="image/*" onChange={handleChangeImg} />
-
-  //   <PhotoLibraryIcon style={{ color: "green" }} />
-  //   <h3>Photo/Video</h3>
-  // </label>
 
   if (!mount) {
     return null;

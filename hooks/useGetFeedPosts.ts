@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import useGetCurrentUser from "./useGetCurrentUser";
 import { collection, getDocs, query, where } from "firebase/firestore";

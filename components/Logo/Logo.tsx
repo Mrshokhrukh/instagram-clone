@@ -1,7 +1,6 @@
 import Link from "next/link";
 import React from "react";
 import { buttonVariants } from "../ui/button";
-import { SwitchCamera } from "lucide-react";
 import Image from "next/image";
 import logo from "../../assets/oqLogo.png";
 import { FaInstagram } from "react-icons/fa";

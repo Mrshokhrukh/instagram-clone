@@ -8,9 +8,9 @@ const Posts: React.FC<PostsProps> = () => {
   // ;
 
   return (
-    <div className="">
+    <div className="flex flex-col gap-5">
       {postData.map((post: any, i: any) => {
-        return <Post key={i} post={post}/>;
+        return <Post key={i} post={post} />;
       })}
     </div>
   );

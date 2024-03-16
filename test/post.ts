@@ -7,6 +7,7 @@ export const postData = [
       "https://marketplace.canva.com/EAFNVAn583I/1/0/1600w/canva-minimal-paper-coming-soon-instagram-post-Epfk6z-VnXM.jpg",
     createdAt: "1710326089284",
     likes: [],
+    id: "87QFRBWDa2VxyFxfwxm7Czt8qcY22",
   },
   {
     caption: "hello world",
@@ -16,5 +17,6 @@ export const postData = [
       "https://marketplace.canva.com/EAFNVAn583I/1/0/1600w/canva-minimal-paper-coming-soon-instagram-post-Epfk6z-VnXM.jpg",
     createdAt: "1710326089284",
     likes: [],
+    id: "87QFRBWDa2VxyFxfwxm7Czt8qcY23",
   },
 ];

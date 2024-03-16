@@ -8,17 +8,25 @@ import Link from "next/link";
 type PostsOptionsProps = {
   userId?: string;
   post: any;
+  className?: string;
 };
 
-const PostsOptions: React.FC<PostsOptionsProps> = ({ userId, post }) => {
+const PostsOptions: React.FC<PostsOptionsProps> = ({
+  userId,
+  post,
+  className,
+}) => {
   const isPostOwner = post?.createdBy === userId;
 
   return (
     <div>
       <Dialog>
-        <DialogTrigger>
+        <DialogTrigger asChild>
           <MoreHorizontal
-            className={cn("h-5 w-5 cursor-pointer dark:text-neutral-300")}
+            className={cn(
+              "h-5 w-5 cursor-pointer dark:text-neutral-300",
+              className
+            )}
           ></MoreHorizontal>
         </DialogTrigger>
         <DialogContent className="dialogContent">

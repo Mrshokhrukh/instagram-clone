@@ -45,7 +45,14 @@ const ViewPost: React.FC<ViewPostProps> = ({ post, postId }) => {
             </Link>
           </DialogHeader>
           <ScrollArea className="hidden md:inline borde-b flex-1 py-1.5">
-            <MiniPost />
+            <MiniPost post={post} />
+            {
+              post.comments.length > 0 && (
+                <>
+                 {post.comments.map()} 
+                </>
+              )
+            }
           </ScrollArea>
         </div>
       </DialogContent>

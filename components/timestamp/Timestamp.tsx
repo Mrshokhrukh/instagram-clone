@@ -9,31 +9,31 @@ type TimestampProps = {
 };
 
 const Timestamp: React.FC<TimestampProps> = ({ createdAt, className }) => {
+  
+  
   return (
-    <div>
-      <TimeAgo
-        className={cn(
-          "font-medium text-neutral-500 dark:text-neutral-400 text-xs"
-        )}
-        date={createdAt}
-        formatter={(
-          value: any,
-          unit: any,
-          suffix: any,
-          epochMilliseconds: any,
-          nextFormatter: any
-        ) => {
-          // if (suffix == "now") {
-          //   return `${suffix}`;
-          // }
-          if (unit) {
-            return `${value}${unit[0]} ago`;
-          } else {
-            return nextFormatter?.(value, unit, suffix, epochMilliseconds);
-          }
-        }}
-      />
-    </div>
+    <TimeAgo
+      className={cn(
+        "font-medium text-neutral-500 dark:text-neutral-400 text-xs"
+      )}
+      date={createdAt}
+      formatter={(
+        value: any,
+        unit: any,
+        suffix: any,
+        epochMilliseconds: any,
+        nextFormatter: any
+      ) => {
+        // if (suffix == "now") {
+        //   return `${suffix}`;
+        // }
+        if (unit) {
+          return `${value}${unit[0]} ago`;
+        } else {
+          return nextFormatter?.(value, unit, suffix, epochMilliseconds);
+        }
+      }}
+    />
   );
 };
 export default Timestamp;

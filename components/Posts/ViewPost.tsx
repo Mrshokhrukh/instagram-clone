@@ -7,6 +7,7 @@ import { Avatar } from "@mui/material";
 import useMount from "@/hooks/useMount";
 import { ScrollArea } from "../ui/scroll-area";
 import MiniPost from "./MiniPost";
+import PostViewComments from "./postViewComments";
 
 type ViewPostProps = {
   post: any;
@@ -46,13 +47,19 @@ const ViewPost: React.FC<ViewPostProps> = ({ post, postId }) => {
           </DialogHeader>
           <ScrollArea className="hidden md:inline borde-b flex-1 py-1.5">
             <MiniPost post={post} />
-            {
-              post.comments.length > 0 && (
-                <>
-                 {post.comments.map()} 
-                </>
-              )
-            }
+            {post?.comments.length > 0 && (
+              <>
+                {post?.comments.map((com: any, i: number) => {
+                  return (
+                    <PostViewComments
+                      key={i}
+                      comment={com}
+                      inputRef={inputRef}
+                    />
+                  );
+                })}
+              </>
+            )}
           </ScrollArea>
         </div>
       </DialogContent>

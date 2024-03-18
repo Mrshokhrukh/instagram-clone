@@ -9,11 +9,10 @@ type postViewCommentsProps = {
   inputRef?: React.RefObject<HTMLInputElement>;
 };
 
-const postViewComments: React.FC<postViewCommentsProps> = ({
+const PostViewComments: React.FC<postViewCommentsProps> = ({
   inputRef,
   comment,
 }) => {
-    
   const username = "shokhrukh";
   const href = `/dashboard/${username}`;
 
@@ -47,4 +46,4 @@ const postViewComments: React.FC<postViewCommentsProps> = ({
     </div>
   );
 };
-export default postViewComments;
+export default PostViewComments;

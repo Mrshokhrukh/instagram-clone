@@ -1,3 +1,4 @@
+import UserPosts from "@/components/userPosts/UserPosts";
 import React from "react";
 
 type pageProps = {
@@ -7,7 +8,10 @@ type pageProps = {
 const page: React.FC<pageProps> = ({ params: { userId } }) => {
   return (
     <div>
-      <h1>{userId}</h1>
+      <h1>{userId} </h1>
+      <div>
+        <UserPosts userId={userId} />
+      </div>
     </div>
   );
 };

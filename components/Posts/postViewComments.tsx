@@ -32,8 +32,11 @@ const PostViewComments: React.FC<postViewCommentsProps> = ({
         </div>
         <div className="flex h-5 items-center space-x-2.5">
           <Timestamp createdAt={Number(comment.createdAt)} />
+          <button className="text-xs font-semibold text-neutral-400">
+            121 likes
+          </button>
           <button
-            className="text-xs font-semibold text-neutral-500"
+            className="text-xs font-semibold text-neutral-400"
             onClick={() => inputRef?.current?.focus()}
           >
             Reply

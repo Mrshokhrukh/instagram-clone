@@ -9,7 +9,7 @@ import {
 import { MoreHorizontal } from "lucide-react";
 // import { toast } from "sonner";
 type CommentOptionsProps = {
-  comment: Comment;
+  comment: any;
 };
 
 const CommentOptions: React.FC<CommentOptionsProps> = ({ comment }) => {

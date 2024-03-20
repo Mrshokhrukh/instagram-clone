@@ -11,6 +11,7 @@ import {
 import { auth } from "@/app/fireabase/firebase";
 import { redirect, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const LoginForm = () => {
   const [user] = useAuthState(auth);
@@ -72,7 +73,7 @@ const LoginForm = () => {
             />
             <div className="flex">
               <input
-                type={showPass ? "text" : "password"}
+                type={showPass ? `text` : `password`}
                 className="authInput"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -83,12 +84,12 @@ const LoginForm = () => {
                 className="text-[12px] w-[45px] bg-slate-100 border border-l-0 border-gray-300"
                 onClick={() => setShowPass(!showPass)}
               >
-                {showPass ? "hide" : "show"}
+                {showPass ? `hide` : `show`}
               </button>
             </div>
           </div>
           <button className="font-medium text-sm bg-lightblue text-white rounded p-1.5">
-            {loading ? "logging in..." : "Sign In"}
+            {loading ? `logging in...` : `Sign In`}
           </button>
         </form>
 
@@ -112,34 +113,31 @@ const LoginForm = () => {
           Forgot password?
         </a>
       </div>
-      <div
-        className="p-4 flex items-center justify-center border border-gray-300 
-        text-sm"
-      >
-        Don't have an account?
-        <a
+      <div className="p-4 flex items-center justify-center border border-gray-300 text-sm">
+        Do not have an account?
+        <Link
           href="/signup"
           className="ml-1.5 text-blue-500 font-medium hover:underline"
         >
           Sign up
-        </a>
+        </Link>
       </div>
       <p className="text-center text-sm my-2">Get the app.</p>
       <div className="flex gap-5 justify-center ">
-        <a href="">
+        <Link href="">
           <img
             src="https://static.cdninstagram.com/rsrc.php/v3/yz/r/c5Rp7Ym-Klz.png"
             alt=""
             className="w-[125px] h-[40px]"
           />
-        </a>
-        <a href="">
+        </Link>
+        <Link href="">
           <img
             src="https://static.cdninstagram.com/rsrc.php/v3/yu/r/EHY6QnZYdNX.png"
             alt=""
             className="w-[125px] h-[40px]"
           />
-        </a>
+        </Link>
       </div>
     </div>
   );

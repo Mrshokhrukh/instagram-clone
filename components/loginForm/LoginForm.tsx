@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import qora from "../../assets/qoraLogo.png";
 import { AiFillGoogleCircle } from "react-icons/ai";
@@ -11,7 +11,6 @@ import {
 import { auth } from "@/app/fireabase/firebase";
 import { redirect, useRouter } from "next/navigation";
 import { toast } from "sonner";
-import useMount from "@/hooks/useMount";
 
 const LoginForm = () => {
   const [user] = useAuthState(auth);
@@ -58,7 +57,7 @@ const LoginForm = () => {
           priority={true}
           src={qora}
           width={200}
-          alt=""
+          alt="404"
           className="px-3 pb-8 m-auto my-2 mt-3"
         />
 
@@ -109,7 +108,7 @@ const LoginForm = () => {
           Log in with Google
         </div>
 
-        <a href="" className="hover:underline text-[12px] text-blue-700">
+        <a href="/" className="hover:underline text-[12px] text-blue-700">
           Forgot password?
         </a>
       </div>
@@ -117,7 +116,7 @@ const LoginForm = () => {
         className="p-4 flex items-center justify-center border border-gray-300 
         text-sm"
       >
-        Don't have an account?{" "}
+        Don't have an account?
         <a
           href="/signup"
           className="ml-1.5 text-blue-500 font-medium hover:underline"
